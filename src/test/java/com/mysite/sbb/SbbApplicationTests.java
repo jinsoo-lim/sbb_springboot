@@ -4,9 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class SbbApplicationTests {
@@ -14,15 +15,19 @@ class SbbApplicationTests {
     @Autowired
     private QuestionRepository questionRepository;
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
     @Test
     void testJpa() {
-        Question q1 = new Question();
-        q1.setSubject("what is sbb?");
-        this.questionRepository.save(q1);
+        Optional<Question> oq = this.questionRepository.findById(102);
+        assertTrue(oq.isPresent());
+        Question q = oq.get();
 
-        List<Question> qList = this.questionRepository.findBySubjectLike("%sbb");
-        Question q = qList.get(0);
-        assertEquals("what is sbb", q.getSubject());
-
+        Answer a = new Answer();
+        a.setContent("네, 자동으로 생성됩니다.");
+        a.setQuestion(q);
+        a.setCreatDate(LocalDateTime.now());
+        this.answerRepository.save(a);
     }
 }
