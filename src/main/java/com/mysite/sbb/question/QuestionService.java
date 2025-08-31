@@ -12,5 +12,6 @@ public class QuestionService {
 
     public List<Question> getList() {
         return this.questionRepository.findAll();
+
     }
 }
