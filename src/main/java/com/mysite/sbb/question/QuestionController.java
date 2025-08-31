@@ -19,5 +19,6 @@ public class QuestionController {
         List<Question> questionList = this.questionService.getList();
         model.addAttribute("questionList", questionList);
         return "question_list";
+
     }
 }
