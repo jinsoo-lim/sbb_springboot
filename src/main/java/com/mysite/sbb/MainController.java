@@ -10,6 +10,11 @@ public class MainController {
     @ResponseBody
     public String index(){
         return "index";
+    }
+
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/question/list";
 
     }
 
